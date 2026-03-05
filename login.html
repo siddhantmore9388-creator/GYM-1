@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | RAN'S FITNESS CLUB</title>
+    <meta name="description" content="Login to your RAN'S FITNESS CLUB account">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Authentication Pages Styles */
+        .auth-page {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
+                        url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 40px;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .auth-card {
+            background: var(--dark-gray);
+            border-radius: 15px;
+            padding: 50px 40px;
+            border: 1px solid var(--medium-gray);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .auth-header .logo {
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .auth-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .auth-header h2 span {
+            color: var(--primary-red);
+        }
+
+        .auth-header p {
+            color: var(--light-gray);
+        }
+
+        .auth-form .form-group {
+            margin-bottom: 25px;
+        }
+
+        .auth-form .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .auth-form .form-group label i {
+            color: var(--primary-red);
+            width: 20px;
+        }
+
+        .auth-form .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            background: var(--medium-gray);
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            color: var(--pure-white);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .auth-form .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 10px rgba(230, 57, 70, 0.2);
+        }
+
+        .auth-form .form-group input::placeholder {
+            color: var(--light-gray);
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--light-gray);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-red);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-red);
+            cursor: pointer;
+        }
+
+        .remember-me span {
+            color: var(--light-gray);
+            font-size: 0.95rem;
+        }
+
+        .forgot-password {
+            color: var(--primary-red);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: var(--light-gray);
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--medium-gray);
+        }
+
+        .auth-divider span {
+            padding: 0 15px;
+            font-size: 0.9rem;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 15px;
+            background: var(--medium-gray);
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            color: var(--pure-white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary-red);
+            background: var(--secondary-black);
+        }
+
+        .auth-footer {
+            text-align: center;
+        }
+
+        .auth-footer p {
+            color: var(--light-gray);
+        }
+
+        .auth-footer a {
+            color: var(--primary-red);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-home a {
+            color: var(--light-gray);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .back-home a:hover {
+            color: var(--primary-red);
+        }
+
+        /* Login Type Tabs */
+        .login-type-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .login-type-tab {
+            flex: 1;
+            padding: 15px;
+            background: var(--medium-gray);
+            border: 2px solid var(--medium-gray);
+            border-radius: 10px;
+            color: var(--light-gray);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .login-type-tab:hover {
+            border-color: var(--primary-red);
+            color: var(--pure-white);
+        }
+
+        .login-type-tab.active {
+            background: var(--primary-red);
+            border-color: var(--primary-red);
+            color: var(--pure-white);
+        }
+
+        .login-type-tab i {
+            font-size: 1.1rem;
+        }
+
+        /* Error Message */
+        .error-message {
+            background: rgba(230, 57, 70, 0.1);
+            border: 1px solid var(--primary-red);
+            color: var(--primary-red);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: rgba(37, 211, 102, 0.1);
+            border: 1px solid #25d366;
+            color: #25d366;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .success-message.show {
+            display: flex;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 35px 25px;
+            }
+
+            .auth-header h2 {
+                font-size: 1.6rem;
+            }
+
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar scrolled">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <div class="logo-text">RAN'S <span>FITNESS</span></div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="transformation.html">Transformations</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <section class="auth-page">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">R</div>
+                        <div class="logo-text">RAN'S <span>FITNESS</span></div>
+                    </a>
+                    <h2>Welcome <span>Back</span></h2>
+                    <p>Sign in to access your account</p>
+                </div>
+
+                <!-- Login Type Tabs -->
+                <div class="login-type-tabs">
+                    <button type="button" class="login-type-tab active" id="userTab" data-type="user">
+                        <i class="fas fa-user"></i> User Login
+                    </button>
+                    <button type="button" class="login-type-tab" id="adminTab" data-type="admin">
+                        <i class="fas fa-user-shield"></i> Admin Login
+                    </button>
+                </div>
+
+                <div class="error-message" id="errorMessage">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="errorText">Invalid username or password</span>
+                </div>
+
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Login successful! Redirecting...</span>
+                </div>
+
+                <form class="auth-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="username">
+                            <i class="fas fa-user"></i> Username
+                        </label>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <div class="password-field">
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="password-toggle" id="passwordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="rememberMe" name="rememberMe">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-password" id="forgotPassword">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary auth-btn">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                </form>
+
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+
+                <div class="social-login">
+                    <button type="button" class="social-btn" title="Login with Google">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button type="button" class="social-btn" title="Login with Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button type="button" class="social-btn" title="Login with Apple">
+                        <i class="fab fa-apple"></i>
+                    </button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+                </div>
+                
+                <!-- Debug/Reset Section -->
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--medium-gray); text-align: center;">
+                    <p style="color: var(--light-gray); font-size: 0.85rem; margin-bottom: 10px;">Having trouble logging in?</p>
+                    <button type="button" id="resetSystemBtn" style="background: transparent; border: 1px solid var(--medium-gray); color: var(--light-gray); padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.8rem;">
+                        <i class="fas fa-sync-alt"></i> Reset System Data
+                    </button>
+                </div>
+            </div>
+
+            <div class="back-home">
+                <a href="index.html">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        // Login Form Handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const passwordToggle = document.getElementById('passwordToggle');
+            const passwordInput = document.getElementById('password');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const successMessage = document.getElementById('successMessage');
+            const forgotPassword = document.getElementById('forgotPassword');
+            const usernameInput = document.getElementById('username');
+
+            // Initialize default users FIRST (before anything else)
+            initializeDefaultUsers();
+            
+            // Debug: Log current users in console
+            console.log('Current users in localStorage:', JSON.parse(localStorage.getItem('users') || '[]'));
+
+            // Password visibility toggle
+            if (passwordToggle && passwordInput) {
+                passwordToggle.addEventListener('click', function() {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    
+                    const icon = passwordToggle.querySelector('i');
+                    icon.classList.toggle('fa-eye');
+                    icon.classList.toggle('fa-eye-slash');
+                });
+            }
+
+            // Form submission
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Hide previous messages
+                    errorMessage.classList.remove('show');
+                    successMessage.classList.remove('show');
+
+                    const username = usernameInput.value.trim();
+                    const password = passwordInput.value;
+                    const rememberMe = document.getElementById('rememberMe').checked;
+                    const loginType = document.querySelector('.login-type-tab.active').dataset.type;
+
+                    // Basic validation
+                    if (!username || !password) {
+                        showError('Please fill in all fields');
+                        return;
+                    }
+
+                    // Attempt login
+                    attemptLogin(username, password, rememberMe, loginType);
+                });
+            }
+
+            // Forgot password
+            if (forgotPassword) {
+                forgotPassword.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const username = usernameInput.value.trim();
+                    
+                    if (!username) {
+                        showError('Please enter your username first');
+                        usernameInput.focus();
+                        return;
+                    }
+
+                    // Check if user exists
+                    const users = JSON.parse(localStorage.getItem('users') || '[]');
+                    const user = users.find(u => u.username === username || u.email === username);
+                    
+                    if (user) {
+                        successMessage.querySelector('span').textContent = 'Password reset link sent to your email!';
+                        successMessage.classList.add('show');
+                    } else {
+                        showError('Username not found');
+                    }
+                });
+            }
+
+            function showError(message) {
+                errorText.textContent = message;
+                errorMessage.classList.add('show');
+            }
+
+            function attemptLogin(username, password, rememberMe, loginType) {
+                const btn = loginForm.querySelector('button[type="submit"]');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    // Get users from localStorage
+                    let users = [];
+                    try {
+                        users = JSON.parse(localStorage.getItem('users') || '[]');
+                    } catch (e) {
+                        console.error('Error parsing users:', e);
+                        showError('System error. Please refresh the page.');
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        return;
+                    }
+                    
+                    console.log('Attempting login with:', username);
+                    console.log('Available users:', users.map(u => ({ username: u.username, role: u.role, status: u.status })));
+                    
+                    // Find user by username or email (case-insensitive)
+                    const user = users.find(u => 
+                        (u.username && u.username.toLowerCase() === username.toLowerCase()) || 
+                        (u.email && u.email.toLowerCase() === username.toLowerCase())
+                    );
+
+                    if (!user) {
+                        showError('Invalid username or password');
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        return;
+                    }
+                    
+                    // Check password
+                    if (user.password !== password) {
+                        console.log('Password mismatch for user:', user.username);
+                        showError('Invalid username or password');
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        return;
+                    }
+
+                    // Check if user is approved
+                    if (user.status === 'pending') {
+                        showError('Your account is pending approval. Please contact admin.');
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        return;
+                    }
+
+                    // Check login type matches role
+                    if (loginType === 'admin' && user.role !== 'admin') {
+                        showError('You do not have admin privileges');
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        return;
+                    }
+
+                    // Store login state
+                    const sessionData = {
+                        id: user.id,
+                        username: user.username,
+                        email: user.email,
+                        role: user.role,
+                        name: (user.firstName || '') + ' ' + (user.lastName || ''),
+                        firstName: user.firstName || '',
+                        lastName: user.lastName || '',
+                        phone: user.phone || '',
+                        goal: user.goal || 'general',
+                        loginTime: new Date().toISOString()
+                    };
+
+                    console.log('Storing session data:', sessionData);
+
+                    if (rememberMe) {
+                        localStorage.setItem('user', JSON.stringify(sessionData));
+                        console.log('Stored in localStorage');
+                    } else {
+                        sessionStorage.setItem('user', JSON.stringify(sessionData));
+                        console.log('Stored in sessionStorage');
+                    }
+
+                    successMessage.classList.add('show');
+                    
+                    setTimeout(() => {
+                        if (user.role === 'admin') {
+                            window.location.href = 'admin.html';
+                        } else {
+                            window.location.href = 'profile.html';
+                        }
+                    }, 1000);
+                }, 1000);
+            }
+
+            function initializeDefaultUsers() {
+                try {
+                    // Clear any corrupted data first
+                    const rawData = localStorage.getItem('users');
+                    let existingUsers = [];
+                    
+                    if (rawData) {
+                        try {
+                            const parsed = JSON.parse(rawData);
+                            if (Array.isArray(parsed)) {
+                                existingUsers = parsed;
+                            }
+                        } catch (e) {
+                            console.log('Corrupted users data, resetting...');
+                            localStorage.removeItem('users');
+                        }
+                    }
+                    
+                    // Check if default users already exist
+                    const hasAdmin = existingUsers.some(u => u.username === 'admin');
+                    const hasSiddhant = existingUsers.some(u => u.username === 'siddhant');
+                    const hasDemo = existingUsers.some(u => u.username === 'demo');
+                    
+                    // Add missing default users
+                    const now = Date.now();
+                    const startDate = new Date();
+                    const expiryDate = new Date();
+                    expiryDate.setMonth(expiryDate.getMonth() + 1);
+                    
+                    if (!hasAdmin) {
+                        existingUsers.push({
+                            id: now,
+                            username: 'admin',
+                            email: 'admin@ransfitness.com',
+                            password: 'admin123',
+                            firstName: 'Admin',
+                            lastName: 'User',
+                            phone: '+91 98902 60932',
+                            goal: 'general',
+                            role: 'admin',
+                            status: 'active',
+                            createdAt: new Date().toISOString(),
+                            membership: {
+                                planId: 'premium-monthly',
+                                planName: 'Premium Monthly',
+                                status: 'active',
+                                amount: 5000,
+                                paymentMethod: 'upi',
+                                startDate: startDate.toISOString(),
+                                expiryDate: expiryDate.toISOString()
+                            }
+                        });
+                    }
+                    
+                    if (!hasSiddhant) {
+                        existingUsers.push({
+                            id: now + 1,
+                            username: 'siddhant',
+                            email: 'siddhantmore@gmail.com',
+                            password: 'FANTOM',
+                            firstName: 'Siddhant',
+                            lastName: 'More',
+                            phone: '+91 98765 43210',
+                            goal: 'muscle-gain',
+                            role: 'user',
+                            status: 'active',
+                            createdAt: new Date().toISOString(),
+                            membership: {
+                                planId: 'standard-monthly',
+                                planName: 'Standard Monthly',
+                                status: 'active',
+                                amount: 3500,
+                                paymentMethod: 'cash',
+                                startDate: startDate.toISOString(),
+                                expiryDate: expiryDate.toISOString()
+                            }
+                        });
+                    }
+                    
+                    if (!hasDemo) {
+                        existingUsers.push({
+                            id: now + 2,
+                            username: 'demo',
+                            email: 'demo@example.com',
+                            password: 'demo123',
+                            firstName: 'Demo',
+                            lastName: 'User',
+                            phone: '+91 98765 43211',
+                            goal: 'weight-loss',
+                            role: 'user',
+                            status: 'active',
+                            createdAt: new Date().toISOString(),
+                            membership: {
+                                planId: 'basic-monthly',
+                                planName: 'Basic Monthly',
+                                status: 'active',
+                                amount: 2500,
+                                paymentMethod: 'upi',
+                                startDate: startDate.toISOString(),
+                                expiryDate: expiryDate.toISOString()
+                            }
+                        });
+                    }
+                    
+                    localStorage.setItem('users', JSON.stringify(existingUsers));
+                    console.log('Users initialized:', existingUsers.length, 'users');
+                    
+                    // Initialize membership plans
+                    initializeMembershipPlans();
+                    
+                } catch (e) {
+                    console.error('Error initializing users:', e);
+                }
+            }
+
+            function initializeMembershipPlans() {
+                if (!localStorage.getItem('membershipPlans')) {
+                    const plans = [
+                        {
+                            id: 'basic-monthly',
+                            name: 'Basic Monthly',
+                            price: 2500,
+                            duration: 1,
+                            durationUnit: 'month',
+                            features: ['Gym Access', 'Basic Equipment', 'Locker Facility']
+                        },
+                        {
+                            id: 'standard-monthly',
+                            name: 'Standard Monthly',
+                            price: 3500,
+                            duration: 1,
+                            durationUnit: 'month',
+                            featured: true,
+                            features: ['Gym Access', 'All Equipment', 'Group Classes', 'Diet Consultation']
+                        },
+                        {
+                            id: 'premium-monthly',
+                            name: 'Premium Monthly',
+                            price: 5000,
+                            duration: 1,
+                            durationUnit: 'month',
+                            features: ['All Standard Features', 'Personal Training', 'Steam/Sauna', 'Nutrition Plan']
+                        },
+                        {
+                            id: 'basic-annual',
+                            name: 'Basic Annual',
+                            price: 25000,
+                            duration: 12,
+                            durationUnit: 'months',
+                            features: ['Gym Access', 'Basic Equipment', 'Locker Facility', 'Save ₹5,000']
+                        },
+                        {
+                            id: 'standard-annual',
+                            name: 'Standard Annual',
+                            price: 35000,
+                            duration: 12,
+                            durationUnit: 'months',
+                            featured: true,
+                            features: ['All Standard Features', '2 Months Free', 'Save ₹7,000']
+                        },
+                        {
+                            id: 'premium-annual',
+                            name: 'Premium Annual',
+                            price: 50000,
+                            duration: 12,
+                            durationUnit: 'months',
+                            features: ['All Premium Features', '3 Months Free', 'Save ₹10,000']
+                        }
+                    ];
+                    localStorage.setItem('membershipPlans', JSON.stringify(plans));
+                    console.log('Membership plans initialized');
+                }
+            }
+
+            // Check if already logged in
+            const currentUser = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || 'null');
+            if (currentUser && currentUser.id) {
+                console.log('Already logged in as:', currentUser.username);
+                if (currentUser.role === 'admin') {
+                    window.location.href = 'admin.html';
+                } else {
+                    window.location.href = 'profile.html';
+                }
+                return;
+            }
+
+            // Login Type Tab Switching
+            const userTab = document.getElementById('userTab');
+            const adminTab = document.getElementById('adminTab');
+
+            if (userTab && adminTab) {
+                userTab.addEventListener('click', function() {
+                    userTab.classList.add('active');
+                    adminTab.classList.remove('active');
+                    usernameInput.placeholder = 'Enter your username';
+                });
+
+                adminTab.addEventListener('click', function() {
+                    adminTab.classList.add('active');
+                    userTab.classList.remove('active');
+                    usernameInput.placeholder = 'Enter admin username';
+                });
+            }
+            
+            // Reset System Button
+            document.getElementById('resetSystemBtn').addEventListener('click', function() {
+                if (confirm('This will reset all user data and restore default accounts. Continue?')) {
+                    // Clear all auth-related data
+                    localStorage.removeItem('users');
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('pendingUsers');
+                    sessionStorage.removeItem('user');
+                    
+                    // Re-initialize default users
+                    initializeDefaultUsers();
+                    
+                    // Show success message
+                    successMessage.querySelector('span').textContent = 'System reset! Default accounts restored. Please login now.';
+                    successMessage.classList.add('show');
+                    
+                    console.log('System reset. Default users:', JSON.parse(localStorage.getItem('users') || '[]'));
+                }
+            });
+        });
+    </script>
+</body>
+</html>

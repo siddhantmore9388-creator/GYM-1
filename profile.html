@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | RAN'S FITNESS CLUB</title>
+    <meta name="description" content="View and manage your RAN'S FITNESS CLUB profile">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Profile Page Styles */
+        .profile-page {
+            min-height: 100vh;
+            background: var(--gradient-dark);
+            padding-top: 100px;
+            padding-bottom: 60px;
+        }
+
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .profile-header {
+            background: var(--dark-gray);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid var(--medium-gray);
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--gradient-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--pure-white);
+            border: 4px solid var(--primary-red);
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .profile-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .profile-info h1 span {
+            color: var(--primary-red);
+        }
+
+        .profile-email {
+            color: var(--light-gray);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gradient-red);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .profile-badge.expired {
+            background: linear-gradient(135deg, #666, #444);
+        }
+
+        .profile-badge.pending {
+            background: linear-gradient(135deg, #ffc107, #ff9800);
+            color: #000;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .profile-actions .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .profile-card {
+            background: var(--dark-gray);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid var(--medium-gray);
+            transition: var(--transition);
+        }
+
+        .profile-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-5px);
+        }
+
+        .profile-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .profile-card-header i {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-red);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .profile-card-header h3 {
+            font-size: 1.3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .stat-box {
+            background: var(--medium-gray);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-box .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            display: block;
+        }
+
+        .stat-box .label {
+            font-size: 0.9rem;
+            color: var(--light-gray);
+            margin-top: 5px;
+        }
+
+        .membership-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-row span:first-child {
+            color: var(--light-gray);
+        }
+
+        .info-row span:last-child {
+            font-weight: 600;
+            color: var(--pure-white);
+        }
+
+        .status-active {
+            color: #25d366 !important;
+        }
+
+        .status-expired {
+            color: var(--primary-red) !important;
+        }
+
+        .status-pending {
+            color: #ffc107 !important;
+        }
+
+        .days-remaining {
+            font-size: 0.85rem;
+            padding: 4px 10px;
+            border-radius: 15px;
+            background: rgba(37, 211, 102, 0.1);
+        }
+
+        .days-remaining.warning {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .days-remaining.danger {
+            background: rgba(230, 57, 70, 0.2);
+            color: var(--primary-red);
+        }
+
+        .progress-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .progress-item {
+            background: var(--medium-gray);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .progress-header span:first-child {
+            font-weight: 600;
+        }
+
+        .progress-header span:last-child {
+            color: var(--primary-red);
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: var(--dark-gray);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-red);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--medium-gray);
+            border-radius: 10px;
+        }
+
+        .activity-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--dark-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-red);
+            flex-shrink: 0;
+        }
+
+        .activity-details h4 {
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+
+        .activity-details p {
+            font-size: 0.85rem;
+            color: var(--light-gray);
+        }
+
+        .activity-time {
+            margin-left: auto;
+            font-size: 0.85rem;
+            color: var(--light-gray);
+        }
+
+        .goals-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .goal-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--medium-gray);
+            border-radius: 10px;
+        }
+
+        .goal-checkbox {
+            width: 24px;
+            height: 24px;
+            accent-color: var(--primary-red);
+            cursor: pointer;
+        }
+
+        .goal-text {
+            flex: 1;
+        }
+
+        .goal-text.completed {
+            text-decoration: line-through;
+            color: var(--light-gray);
+        }
+
+        .edit-profile-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .edit-profile-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .edit-profile-form input,
+        .edit-profile-form select {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--medium-gray);
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            color: var(--pure-white);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .edit-profile-form input:focus,
+        .edit-profile-form select:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+
+        .edit-profile-form input::placeholder {
+            color: var(--light-gray);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .not-logged-in {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .not-logged-in i {
+            font-size: 5rem;
+            color: var(--primary-red);
+            margin-bottom: 30px;
+        }
+
+        .not-logged-in h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .not-logged-in p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Password change section */
+        .password-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--medium-gray);
+        }
+
+        .password-section h4 {
+            margin-bottom: 15px;
+            color: var(--primary-red);
+        }
+
+        /* Membership Plans Section */
+        .membership-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .plan-card {
+            background: var(--medium-gray);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid transparent;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .plan-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-5px);
+        }
+
+        .plan-card.selected {
+            border-color: var(--primary-red);
+            background: rgba(230, 57, 70, 0.1);
+        }
+
+        .plan-card.featured::before {
+            content: 'POPULAR';
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: var(--gradient-red);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .plan-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 5px;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            color: var(--light-gray);
+        }
+
+        .plan-duration {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .plan-features li {
+            padding: 5px 0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .plan-features li i {
+            color: #25d366;
+            font-size: 0.8rem;
+        }
+
+        /* Payment Section */
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .payment-method {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px;
+            background: var(--medium-gray);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary-red);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary-red);
+            background: rgba(230, 57, 70, 0.1);
+        }
+
+        .payment-method i {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* Payment History */
+        .payment-history-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--medium-gray);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .payment-status {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .payment-status.paid {
+            background: rgba(37, 211, 102, 0.2);
+            color: #25d366;
+        }
+
+        .payment-status.pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .payment-status.rejected {
+            background: rgba(230, 57, 70, 0.2);
+            color: var(--primary-red);
+        }
+
+        /* QR Code Section */
+        .qr-section {
+            text-align: center;
+            padding: 30px;
+            background: var(--medium-gray);
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: var(--pure-white);
+            border-radius: 10px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-black);
+            font-size: 0.8rem;
+        }
+
+        .upi-id {
+            font-family: monospace;
+            font-size: 1.2rem;
+            background: var(--dark-gray);
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--dark-gray);
+            border: 1px solid var(--medium-gray);
+            border-radius: 10px;
+            padding: 20px 25px;
+            display: none;
+            align-items: center;
+            gap: 15px;
+            z-index: 3000;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .toast.show {
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.success {
+            border-color: #25d366;
+        }
+
+        .toast.error {
+            border-color: var(--primary-red);
+        }
+
+        .toast i {
+            font-size: 1.5rem;
+        }
+
+        .toast.success i {
+            color: #25d366;
+        }
+
+        .toast.error i {
+            color: var(--primary-red);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--dark-gray);
+            border-radius: 15px;
+            border: 1px solid var(--medium-gray);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 25px;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            width: 35px;
+            height: 35px;
+            background: var(--medium-gray);
+            border: none;
+            border-radius: 8px;
+            color: var(--light-gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: var(--primary-red);
+            color: var(--pure-white);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-footer {
+            padding: 20px 25px;
+            border-top: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+
+            .profile-info h1 {
+                font-size: 1.8rem;
+            }
+
+            .profile-actions {
+                justify-content: center;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .membership-plans {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar scrolled">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <div class="logo-text">RAN'S <span>FITNESS</span></div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="transformation.html">Transformations</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="nav-auth"><a href="login.html" class="btn btn-primary btn-small"><i class="fas fa-user"></i> Login</a></li>
+            </ul>
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <section class="profile-page" id="profilePage">
+        <div class="profile-container">
+            <!-- Logged In View -->
+            <div id="loggedInView">
+                <!-- Profile Header -->
+                <div class="profile-header">
+                    <div class="profile-avatar" id="userAvatar">S</div>
+                    <div class="profile-info">
+                        <h1>Welcome, <span id="userName">User</span></h1>
+                        <p class="profile-email">
+                            <i class="fas fa-envelope"></i>
+                            <span id="userEmail">user@example.com</span>
+                        </p>
+                        <p class="profile-email">
+                            <i class="fas fa-user"></i>
+                            <span id="userUsername">username</span>
+                        </p>
+                        <span class="profile-badge" id="userBadge">
+                            <i class="fas fa-crown"></i> Premium Member
+                        </span>
+                        <p id="membershipAlert" style="margin-top: 10px; display: none;"></p>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="btn btn-primary" id="renewBtn" style="display: none;">
+                            <i class="fas fa-sync-alt"></i> Renew Membership
+                        </button>
+                        <button class="btn btn-primary" id="payNowBtn" style="display: none;">
+                            <i class="fas fa-credit-card"></i> Pay Now
+                        </button>
+                        <a href="admin.html" class="btn btn-admin" id="adminDashboardBtn" style="display: none; background: linear-gradient(135deg, #ff6b6b, #e63946); color: white;">
+                            <i class="fas fa-tachometer-alt"></i> Admin Dashboard
+                        </a>
+                        <button class="btn btn-secondary" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Profile Grid -->
+                <div class="profile-grid">
+                    <!-- Membership Status -->
+                    <div class="profile-card">
+                        <div class="profile-card-header">
+                            <i class="fas fa-id-card"></i>
+                            <h3>Membership Status</h3>
+                        </div>
+                        <div class="membership-info">
+                            <div class="info-row">
+                                <span>Current Plan</span>
+                                <span id="currentPlan">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Status</span>
+                                <span id="membershipStatus"><i class="fas fa-clock"></i> -</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Start Date</span>
+                                <span id="membershipStart">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Expiry Date</span>
+                                <span id="membershipExpiry">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Days Remaining</span>
+                                <span id="daysRemaining">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Trainer</span>
+                                <span id="assignedTrainer">Not Assigned</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment History -->
+                    <div class="profile-card">
+                        <div class="profile-card-header">
+                            <i class="fas fa-receipt"></i>
+                            <h3>Payment History</h3>
+                        </div>
+                        <div id="paymentHistoryList">
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-info"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <h4>No payments yet</h4>
+                                    <p>Your payment history will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" id="viewAllPaymentsBtn" style="width: 100%; margin-top: 15px; display: none;">
+                            <i class="fas fa-list"></i> View All Payments
+                        </button>
+                    </div>
+
+                    <!-- Workout Stats -->
+                    <div class="profile-card">
+                        <div class="profile-card-header">
+                            <i class="fas fa-dumbbell"></i>
+                            <h3>Workout Stats</h3>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-box">
+                                <span class="number" id="totalWorkouts">0</span>
+                                <span class="label">Total Workouts</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="number" id="currentStreak">0</span>
+                                <span class="label">Day Streak</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="number" id="caloriesBurned">0</span>
+                                <span class="label">Calories Burned</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="number" id="hoursTrained">0</span>
+                                <span class="label">Hours Trained</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fitness Progress -->
+                    <div class="profile-card">
+                        <div class="profile-card-header">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Fitness Progress</h3>
+                        </div>
+                        <div class="progress-list">
+                            <div class="progress-item">
+                                <div class="progress-header">
+                                    <span>Weight Goal</span>
+                                    <span id="weightProgress">0%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="weightProgressBar" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-header">
+                                    <span>Strength Training</span>
+                                    <span id="strengthProgress">0%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="strengthProgressBar" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-header">
+                                    <span>Cardio Endurance</span>
+                                    <span id="cardioProgress">0%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="cardioProgressBar" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weekly Goals -->
+                    <div class="profile-card">
+                        <div class="profile-card-header">
+                            <i class="fas fa-bullseye"></i>
+                            <h3>Weekly Goals</h3>
+                        </div>
+                        <div class="goals-list" id="goalsList">
+                            <div class="goal-item">
+                                <input type="checkbox" class="goal-checkbox" id="goal1">
+                                <span class="goal-text">Complete 4 workout sessions</span>
+                            </div>
+                            <div class="goal-item">
+                                <input type="checkbox" class="goal-checkbox" id="goal2">
+                                <span class="goal-text">Drink 3L water daily</span>
+                            </div>
+                            <div class="goal-item">
+                                <input type="checkbox" class="goal-checkbox" id="goal3">
+                                <span class="goal-text">Hit 10,000 steps daily</span>
+                            </div>
+                            <div class="goal-item">
+                                <input type="checkbox" class="goal-checkbox" id="goal4">
+                                <span class="goal-text">Attend 1 group class</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edit Profile Form (Hidden by default) -->
+                    <div class="profile-card" id="editProfileCard" style="display: none;">
+                        <div class="profile-card-header">
+                            <i class="fas fa-user-edit"></i>
+                            <h3>Edit Profile</h3>
+                        </div>
+                        <form class="edit-profile-form" id="editProfileForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="editFirstName">First Name</label>
+                                    <input type="text" id="editFirstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editLastName">Last Name</label>
+                                    <input type="text" id="editLastName" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="editPhone">Phone Number</label>
+                                <input type="tel" id="editPhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editGoal">Fitness Goal</label>
+                                <select id="editGoal" required>
+                                    <option value="weight-loss">Weight Loss</option>
+                                    <option value="muscle-gain">Muscle Gain</option>
+                                    <option value="strength">Strength Training</option>
+                                    <option value="general">General Fitness</option>
+                                    <option value="athletic">Athletic Performance</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </form>
+
+                        <!-- Change Password Section -->
+                        <div class="password-section">
+                            <h4><i class="fas fa-lock"></i> Change Password</h4>
+                            <form id="changePasswordForm">
+                                <div class="form-group">
+                                    <label for="currentPassword">Current Password</label>
+                                    <input type="password" id="currentPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" id="newPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmNewPassword">Confirm New Password</label>
+                                    <input type="password" id="confirmNewPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-secondary" style="width: 100%;">
+                                    <i class="fas fa-key"></i> Change Password
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Not Logged In View -->
+            <div class="not-logged-in" id="notLoggedInView" style="display: none;">
+                <i class="fas fa-user-lock"></i>
+                <h2>Access Denied</h2>
+                <p>Please log in to view your profile and track your fitness journey.</p>
+                <a href="login.html" class="btn btn-primary btn-large">
+                    <i class="fas fa-sign-in-alt"></i> Login Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-credit-card"></i> Renew Membership</h3>
+                <button class="modal-close" id="closePaymentModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <h4 style="margin-bottom: 15px;">Select a Plan</h4>
+                <div class="membership-plans" id="membershipPlans">
+                    <!-- Plans will be loaded dynamically -->
+                </div>
+
+                <h4 style="margin: 25px 0 15px;">Payment Method</h4>
+                <div class="payment-methods">
+                    <div class="payment-method selected" data-method="upi">
+                        <i class="fas fa-qrcode"></i>
+                        <span>UPI / QR</span>
+                    </div>
+                    <div class="payment-method" data-method="cash">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Cash</span>
+                    </div>
+                    <div class="payment-method" data-method="bank">
+                        <i class="fas fa-university"></i>
+                        <span>Bank Transfer</span>
+                    </div>
+                </div>
+
+                <div id="upiSection" class="qr-section">
+                    <p>Scan QR code to pay</p>
+                    <div class="qr-code">
+                        <i class="fas fa-qrcode" style="font-size: 100px; color: var(--primary-black);"></i>
+                    </div>
+                    <p>Or pay using UPI ID:</p>
+                    <div class="upi-id" id="upiId">ransfitness@upi</div>
+                    <button class="btn btn-secondary" style="margin-top: 10px;" onclick="copyUPI()">
+                        <i class="fas fa-copy"></i> Copy UPI ID
+                    </button>
+                </div>
+
+                <div id="cashSection" style="display: none; padding: 20px; background: var(--medium-gray); border-radius: 10px; margin-top: 15px;">
+                    <p><i class="fas fa-info-circle"></i> Please visit the gym reception to make cash payment.</p>
+                    <p style="margin-top: 10px; color: var(--light-gray);">Address: RAN'S FITNESS CLUB, Main Road</p>
+                    <p style="color: var(--light-gray);">Timing: 5 AM - 10 PM (Mon-Sat)</p>
+                </div>
+
+                <div id="bankSection" style="display: none; padding: 20px; background: var(--medium-gray); border-radius: 10px; margin-top: 15px;">
+                    <p><strong>Bank Account Details:</strong></p>
+                    <p style="margin-top: 10px;">Account Name: RAN'S FITNESS CLUB</p>
+                    <p>Account Number: 1234567890</p>
+                    <p>IFSC Code: SBIN0001234</p>
+                    <p>Bank: State Bank of India</p>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(230, 57, 70, 0.1); border-radius: 10px;">
+                    <p style="margin: 0;"><i class="fas fa-info-circle" style="color: var(--primary-red);"></i> After payment, your request will be sent to admin for approval. You'll receive access once payment is verified.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelPaymentBtn">Cancel</button>
+                <button class="btn btn-primary" id="confirmPaymentBtn">
+                    <i class="fas fa-paper-plane"></i> Send Payment Request
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">R</div>
+                        <div class="logo-text">RAN'S <span>FITNESS</span></div>
+                    </a>
+                    <p>Transform Your Body. Transform Your Life.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> +91 98902 60932</p>
+                    <p><i class="fas fa-envelope"></i> info@ransfitness.com</p>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 RAN'S FITNESS CLUB. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        // Membership Plans
+        const membershipPlans = [
+            {
+                id: 'basic-monthly',
+                name: 'Basic Monthly',
+                price: 2500,
+                duration: 1,
+                durationUnit: 'month',
+                features: ['Gym Access', 'Basic Equipment', 'Locker Facility']
+            },
+            {
+                id: 'standard-monthly',
+                name: 'Standard Monthly',
+                price: 3500,
+                duration: 1,
+                durationUnit: 'month',
+                featured: true,
+                features: ['Gym Access', 'All Equipment', 'Group Classes', 'Diet Consultation']
+            },
+            {
+                id: 'premium-monthly',
+                name: 'Premium Monthly',
+                price: 5000,
+                duration: 1,
+                durationUnit: 'month',
+                features: ['All Standard Features', 'Personal Training', 'Steam/Sauna', 'Nutrition Plan']
+            },
+            {
+                id: 'basic-annual',
+                name: 'Basic Annual',
+                price: 25000,
+                duration: 12,
+                durationUnit: 'months',
+                features: ['Gym Access', 'Basic Equipment', 'Locker Facility', 'Save ₹5,000']
+            },
+            {
+                id: 'standard-annual',
+                name: 'Standard Annual',
+                price: 35000,
+                duration: 12,
+                durationUnit: 'months',
+                featured: true,
+                features: ['All Standard Features', '2 Months Free', 'Save ₹7,000']
+            },
+            {
+                id: 'premium-annual',
+                name: 'Premium Annual',
+                price: 50000,
+                duration: 12,
+                durationUnit: 'months',
+                features: ['All Premium Features', '3 Months Free', 'Save ₹10,000']
+            }
+        ];
+
+        let selectedPlan = null;
+        let selectedPaymentMethod = 'upi';
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            currentUser = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || 'null');
+            console.log('Profile page - checking user:', currentUser);
+            
+            const loggedInView = document.getElementById('loggedInView');
+            const notLoggedInView = document.getElementById('notLoggedInView');
+            const profilePage = document.getElementById('profilePage');
+
+            if (!currentUser) {
+                console.log('No user found, showing login prompt');
+                loggedInView.style.display = 'none';
+                notLoggedInView.style.display = 'block';
+                profilePage.style.paddingTop = '150px';
+                return;
+            }
+
+            console.log('User logged in:', currentUser.username);
+            
+            // Show logged in view
+            loggedInView.style.display = 'block';
+            notLoggedInView.style.display = 'none';
+
+            // Initialize membership plans in localStorage if not exists
+            initializeMembershipPlans();
+
+            // Load user data
+            loadUserData(currentUser);
+
+            // Setup event listeners
+            setupEventListeners();
+
+            // Load saved goals
+            loadSavedGoals();
+
+            // Load workout stats
+            loadWorkoutStats();
+
+            // Load payment history
+            loadPaymentHistory();
+
+            // Check membership expiry
+            checkMembershipExpiry();
+        });
+
+        function initializeMembershipPlans() {
+            if (!localStorage.getItem('membershipPlans')) {
+                localStorage.setItem('membershipPlans', JSON.stringify(membershipPlans));
+            }
+        }
+
+        function loadUserData(user) {
+            // Update profile header
+            document.getElementById('userName').textContent = user.name || 'User';
+            document.getElementById('userEmail').textContent = user.email || '';
+            document.getElementById('userUsername').textContent = '@' + (user.username || '');
+            document.getElementById('userAvatar').textContent = getInitials(user.name);
+
+            // Show admin dashboard button for admin users
+            if (user.role === 'admin') {
+                document.getElementById('adminDashboardBtn').style.display = 'inline-flex';
+                document.getElementById('userBadge').innerHTML = '<i class="fas fa-user-shield"></i> Administrator';
+            }
+
+            // Get full user data from users list
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const fullUserData = users.find(u => u.id === user.id) || user;
+
+            // Fill edit form
+            document.getElementById('editFirstName').value = fullUserData.firstName || '';
+            document.getElementById('editLastName').value = fullUserData.lastName || '';
+            document.getElementById('editPhone').value = fullUserData.phone || '';
+            document.getElementById('editGoal').value = fullUserData.goal || 'general';
+
+            // Update membership info
+            updateMembershipDisplay(fullUserData);
+        }
+
+        function updateMembershipDisplay(userData) {
+            const membershipStatus = document.getElementById('membershipStatus');
+            const currentPlan = document.getElementById('currentPlan');
+            const membershipStart = document.getElementById('membershipStart');
+            const membershipExpiry = document.getElementById('membershipExpiry');
+            const daysRemaining = document.getElementById('daysRemaining');
+            const renewBtn = document.getElementById('renewBtn');
+            const payNowBtn = document.getElementById('payNowBtn');
+            const userBadge = document.getElementById('userBadge');
+            const membershipAlert = document.getElementById('membershipAlert');
+
+            // Get membership details
+            const membership = userData.membership || {};
+            const planName = membership.planName || 'No Active Plan';
+            const status = membership.status || 'inactive';
+            const startDate = membership.startDate;
+            const expiryDate = membership.expiryDate;
+
+            currentPlan.textContent = planName;
+
+            // Calculate days remaining
+            let daysLeft = 0;
+            if (expiryDate) {
+                const expiry = new Date(expiryDate);
+                const today = new Date();
+                daysLeft = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+            }
+
+            // Update status display
+            if (status === 'active' && daysLeft > 0) {
+                membershipStatus.innerHTML = '<i class="fas fa-check-circle"></i> Active';
+                membershipStatus.className = 'status-active';
+                userBadge.innerHTML = '<i class="fas fa-crown"></i> ' + planName;
+                userBadge.className = 'profile-badge';
+                
+                if (daysLeft <= 7) {
+                    daysRemaining.innerHTML = `<span class="days-remaining danger">${daysLeft} days left</span>`;
+                    membershipAlert.innerHTML = `<i class="fas fa-exclamation-triangle" style="color: #ffc107;"></i> Your membership expires in ${daysLeft} days. <a href="#" onclick="openPaymentModal(); return false;" style="color: var(--primary-red);">Renew now</a>`;
+                    membershipAlert.style.display = 'block';
+                    renewBtn.style.display = 'inline-flex';
+                } else if (daysLeft <= 15) {
+                    daysRemaining.innerHTML = `<span class="days-remaining warning">${daysLeft} days left</span>`;
+                    renewBtn.style.display = 'inline-flex';
+                } else {
+                    daysRemaining.innerHTML = `<span class="days-remaining">${daysLeft} days left</span>`;
+                }
+            } else if (status === 'pending') {
+                membershipStatus.innerHTML = '<i class="fas fa-clock"></i> Pending Approval';
+                membershipStatus.className = 'status-pending';
+                userBadge.innerHTML = '<i class="fas fa-clock"></i> Pending';
+                userBadge.className = 'profile-badge pending';
+                daysRemaining.textContent = 'Waiting for admin approval';
+                membershipAlert.innerHTML = '<i class="fas fa-info-circle" style="color: #ffc107;"></i> Your payment is being verified by admin. You\'ll receive access once approved.';
+                membershipAlert.style.display = 'block';
+            } else if (status === 'expired' || daysLeft <= 0) {
+                membershipStatus.innerHTML = '<i class="fas fa-times-circle"></i> Expired';
+                membershipStatus.className = 'status-expired';
+                userBadge.innerHTML = '<i class="fas fa-times-circle"></i> Expired';
+                userBadge.className = 'profile-badge expired';
+                daysRemaining.innerHTML = '<span class="days-remaining danger">Expired</span>';
+                membershipAlert.innerHTML = '<i class="fas fa-exclamation-circle" style="color: var(--primary-red);"></i> Your membership has expired. <a href="#" onclick="openPaymentModal(); return false;" style="color: var(--primary-red);">Renew now</a> to continue.';
+                membershipAlert.style.display = 'block';
+                renewBtn.style.display = 'inline-flex';
+                payNowBtn.style.display = 'inline-flex';
+            } else {
+                membershipStatus.innerHTML = '<i class="fas fa-times-circle"></i> Inactive';
+                membershipStatus.className = 'status-expired';
+                userBadge.innerHTML = '<i class="fas fa-user"></i> Member';
+                daysRemaining.textContent = '-';
+                payNowBtn.style.display = 'inline-flex';
+            }
+
+            // Set dates
+            membershipStart.textContent = startDate ? formatDate(startDate) : '-';
+            membershipExpiry.textContent = expiryDate ? formatDate(expiryDate) : '-';
+        }
+
+        function checkMembershipExpiry() {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            
+            if (userIndex === -1) return;
+
+            const user = users[userIndex];
+            const membership = user.membership;
+
+            if (membership && membership.expiryDate) {
+                const expiry = new Date(membership.expiryDate);
+                const today = new Date();
+                
+                if (expiry < today && membership.status === 'active') {
+                    // Membership expired
+                    users[userIndex].membership.status = 'expired';
+                    localStorage.setItem('users', JSON.stringify(users));
+                    
+                    // Update session
+                    currentUser.membership = users[userIndex].membership;
+                    if (localStorage.getItem('user')) {
+                        localStorage.setItem('user', JSON.stringify(currentUser));
+                    } else {
+                        sessionStorage.setItem('user', JSON.stringify(currentUser));
+                    }
+                    
+                    // Refresh display
+                    updateMembershipDisplay(users[userIndex]);
+                    
+                    showToast('Your membership has expired. Please renew to continue.', 'error');
+                }
+            }
+        }
+
+        function setupEventListeners() {
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('user');
+                    sessionStorage.removeItem('user');
+                    window.location.href = 'login.html';
+                }
+            });
+
+            // Edit profile toggle
+            const editProfileBtn = document.getElementById('editProfileBtn');
+            const editProfileCard = document.getElementById('editProfileCard');
+            
+            if (editProfileBtn) {
+                editProfileBtn.addEventListener('click', function() {
+                    if (editProfileCard.style.display === 'none') {
+                        editProfileCard.style.display = 'block';
+                        editProfileBtn.innerHTML = '<i class="fas fa-times"></i> Cancel';
+                        editProfileCard.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        editProfileCard.style.display = 'none';
+                        editProfileBtn.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
+                    }
+                });
+            }
+
+            // Edit profile form submission
+            document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const firstName = document.getElementById('editFirstName').value;
+                const lastName = document.getElementById('editLastName').value;
+                const phone = document.getElementById('editPhone').value;
+                const goal = document.getElementById('editGoal').value;
+
+                // Update in users list
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const userIndex = users.findIndex(u => u.id === currentUser.id);
+                
+                if (userIndex !== -1) {
+                    users[userIndex].firstName = firstName;
+                    users[userIndex].lastName = lastName;
+                    users[userIndex].phone = phone;
+                    users[userIndex].goal = goal;
+                    users[userIndex].name = firstName + ' ' + lastName;
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+
+                // Update session
+                currentUser = {
+                    ...currentUser,
+                    firstName,
+                    lastName,
+                    phone,
+                    goal,
+                    name: firstName + ' ' + lastName
+                };
+
+                if (localStorage.getItem('user')) {
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                } else {
+                    sessionStorage.setItem('user', JSON.stringify(currentUser));
+                }
+
+                // Update UI
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userAvatar').textContent = getInitials(currentUser.name);
+                
+                showToast('Profile updated successfully!', 'success');
+                editProfileCard.style.display = 'none';
+                editProfileBtn.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
+            });
+
+            // Change password form
+            document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const userIndex = users.findIndex(u => u.id === currentUser.id);
+
+                if (userIndex === -1) {
+                    showToast('User not found', 'error');
+                    return;
+                }
+
+                if (users[userIndex].password !== currentPassword) {
+                    showToast('Current password is incorrect', 'error');
+                    return;
+                }
+
+                if (newPassword.length < 8) {
+                    showToast('New password must be at least 8 characters', 'error');
+                    return;
+                }
+
+                if (newPassword !== confirmNewPassword) {
+                    showToast('New passwords do not match', 'error');
+                    return;
+                }
+
+                users[userIndex].password = newPassword;
+                localStorage.setItem('users', JSON.stringify(users));
+
+                showToast('Password changed successfully!', 'success');
+                this.reset();
+            });
+
+            // Goal checkbox functionality
+            document.querySelectorAll('.goal-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const goalText = this.nextElementSibling;
+                    if (this.checked) {
+                        goalText.classList.add('completed');
+                    } else {
+                        goalText.classList.remove('completed');
+                    }
+                    saveGoals();
+                });
+            });
+
+            // Payment buttons
+            document.getElementById('renewBtn').addEventListener('click', openPaymentModal);
+            document.getElementById('payNowBtn').addEventListener('click', openPaymentModal);
+
+            // Modal close buttons
+            document.getElementById('closePaymentModal').addEventListener('click', closePaymentModal);
+            document.getElementById('cancelPaymentBtn').addEventListener('click', closePaymentModal);
+
+            // Payment method selection
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.addEventListener('click', function() {
+                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedPaymentMethod = this.dataset.method;
+                    
+                    // Show/hide payment sections
+                    document.getElementById('upiSection').style.display = selectedPaymentMethod === 'upi' ? 'block' : 'none';
+                    document.getElementById('cashSection').style.display = selectedPaymentMethod === 'cash' ? 'block' : 'none';
+                    document.getElementById('bankSection').style.display = selectedPaymentMethod === 'bank' ? 'block' : 'none';
+                });
+            });
+
+            // Confirm payment
+            document.getElementById('confirmPaymentBtn').addEventListener('click', submitPaymentRequest);
+        }
+
+        function openPaymentModal() {
+            loadMembershipPlans();
+            document.getElementById('paymentModal').classList.add('show');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('show');
+            selectedPlan = null;
+        }
+
+        function loadMembershipPlans() {
+            const container = document.getElementById('membershipPlans');
+            const plans = JSON.parse(localStorage.getItem('membershipPlans') || '[]');
+            
+            container.innerHTML = plans.map(plan => `
+                <div class="plan-card ${plan.featured ? 'featured' : ''}" data-plan-id="${plan.id}" onclick="selectPlan('${plan.id}')">
+                    <div class="plan-name">${plan.name}</div>
+                    <div class="plan-price">₹${plan.price.toLocaleString()}<span>/${plan.duration} ${plan.durationUnit}</span></div>
+                    <div class="plan-duration">${plan.duration} ${plan.durationUnit}</div>
+                    <ul class="plan-features">
+                        ${plan.features.map(f => `<li><i class="fas fa-check"></i> ${f}</li>`).join('')}
+                    </ul>
+                </div>
+            `).join('');
+        }
+
+        function selectPlan(planId) {
+            selectedPlan = planId;
+            document.querySelectorAll('.plan-card').forEach(card => {
+                card.classList.remove('selected');
+                if (card.dataset.planId === planId) {
+                    card.classList.add('selected');
+                }
+            });
+        }
+
+        function submitPaymentRequest() {
+            if (!selectedPlan) {
+                showToast('Please select a membership plan', 'error');
+                return;
+            }
+
+            const plan = membershipPlans.find(p => p.id === selectedPlan);
+            if (!plan) {
+                showToast('Invalid plan selected', 'error');
+                return;
+            }
+
+            // Create payment request
+            const paymentRequest = {
+                id: Date.now(),
+                userId: currentUser.id,
+                userName: currentUser.name,
+                userEmail: currentUser.email,
+                planId: plan.id,
+                planName: plan.name,
+                amount: plan.price,
+                duration: plan.duration,
+                durationUnit: plan.durationUnit,
+                paymentMethod: selectedPaymentMethod,
+                status: 'pending',
+                requestDate: new Date().toISOString(),
+                notes: ''
+            };
+
+            // Save payment request
+            const paymentRequests = JSON.parse(localStorage.getItem('paymentRequests') || '[]');
+            paymentRequests.push(paymentRequest);
+            localStorage.setItem('paymentRequests', JSON.stringify(paymentRequests));
+
+            // Update user's membership to pending
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            
+            if (userIndex !== -1) {
+                users[userIndex].membership = {
+                    planId: plan.id,
+                    planName: plan.name,
+                    status: 'pending',
+                    amount: plan.price,
+                    paymentMethod: selectedPaymentMethod,
+                    requestDate: paymentRequest.requestDate
+                };
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Update session
+                currentUser.membership = users[userIndex].membership;
+                if (localStorage.getItem('user')) {
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                } else {
+                    sessionStorage.setItem('user', JSON.stringify(currentUser));
+                }
+                
+                // Update display
+                updateMembershipDisplay(users[userIndex]);
+            }
+
+            closePaymentModal();
+            showToast('Payment request sent! Admin will verify and activate your membership.', 'success');
+            loadPaymentHistory();
+        }
+
+        function loadPaymentHistory() {
+            const paymentRequests = JSON.parse(localStorage.getItem('paymentRequests') || '[]');
+            const userPayments = paymentRequests.filter(p => p.userId === currentUser.id);
+            const container = document.getElementById('paymentHistoryList');
+            const viewAllBtn = document.getElementById('viewAllPaymentsBtn');
+
+            if (userPayments.length === 0) {
+                container.innerHTML = `
+                    <div class="activity-item">
+                        <div class="activity-icon"><i class="fas fa-info"></i></div>
+                        <div class="activity-details">
+                            <h4>No payments yet</h4>
+                            <p>Your payment history will appear here</p>
+                        </div>
+                    </div>
+                `;
+                viewAllBtn.style.display = 'none';
+                return;
+            }
+
+            // Show last 3 payments
+            const recentPayments = userPayments.slice(-3).reverse();
+            
+            container.innerHTML = recentPayments.map(payment => `
+                <div class="payment-history-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-${payment.status === 'paid' ? 'check' : payment.status === 'pending' ? 'clock' : 'times'}"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <h4 style="margin: 0;">${payment.planName}</h4>
+                        <p style="margin: 5px 0 0; color: var(--light-gray); font-size: 0.85rem;">
+                            ₹${payment.amount.toLocaleString()} • ${formatDate(payment.requestDate)}
+                        </p>
+                    </div>
+                    <span class="payment-status ${payment.status}">${payment.status}</span>
+                </div>
+            `).join('');
+
+            viewAllBtn.style.display = userPayments.length > 3 ? 'block' : 'none';
+        }
+
+        function loadSavedGoals() {
+            const savedGoals = JSON.parse(localStorage.getItem('userGoals') || '[]');
+            document.querySelectorAll('.goal-checkbox').forEach((checkbox, index) => {
+                if (savedGoals[index]) {
+                    checkbox.checked = savedGoals[index].checked;
+                    if (savedGoals[index].checked) {
+                        checkbox.nextElementSibling.classList.add('completed');
+                    }
+                }
+            });
+        }
+
+        function saveGoals() {
+            const goals = [];
+            document.querySelectorAll('.goal-checkbox').forEach(checkbox => {
+                goals.push({ checked: checkbox.checked });
+            });
+            localStorage.setItem('userGoals', JSON.stringify(goals));
+        }
+
+        function loadWorkoutStats() {
+            const stats = JSON.parse(localStorage.getItem('userWorkoutStats') || '{}');
+            
+            document.getElementById('totalWorkouts').textContent = stats.totalWorkouts || '0';
+            document.getElementById('currentStreak').textContent = stats.currentStreak || '0';
+            document.getElementById('caloriesBurned').textContent = stats.caloriesBurned || '0';
+            document.getElementById('hoursTrained').textContent = stats.hoursTrained || '0';
+
+            const progress = JSON.parse(localStorage.getItem('userFitnessProgress') || '{}');
+            
+            const weightProgress = progress.weight || 0;
+            const strengthProgress = progress.strength || 0;
+            const cardioProgress = progress.cardio || 0;
+
+            document.getElementById('weightProgress').textContent = weightProgress + '%';
+            document.getElementById('weightProgressBar').style.width = weightProgress + '%';
+            
+            document.getElementById('strengthProgress').textContent = strengthProgress + '%';
+            document.getElementById('strengthProgressBar').style.width = strengthProgress + '%';
+            
+            document.getElementById('cardioProgress').textContent = cardioProgress + '%';
+            document.getElementById('cardioProgressBar').style.width = cardioProgress + '%';
+        }
+
+        function getInitials(name) {
+            if (!name) return 'U';
+            return name.split(' ').map(n => n[0]).join('').toUpperCase();
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '-';
+            return new Date(dateString).toLocaleDateString('en-IN', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+
+        function copyUPI() {
+            const upiId = document.getElementById('upiId').textContent;
+            navigator.clipboard.writeText(upiId).then(() => {
+                showToast('UPI ID copied!', 'success');
+            });
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = toast.querySelector('i');
+
+            toastMessage.textContent = message;
+            toast.className = 'toast show ' + type;
+            toastIcon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>

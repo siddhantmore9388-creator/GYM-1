@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | RAN'S FITNESS CLUB</title>
+    <meta name="description" content="Contact RAN'S FITNESS CLUB for gym membership, personal training, and fitness programs. Call or WhatsApp +91 98902 60932.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <div class="logo-text">RAN'S <span>FITNESS</span></div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="transformation.html">Transformations</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li class="nav-auth"><a href="login.html" class="btn btn-primary btn-small"><i class="fas fa-user"></i> Login</a></li>
+            </ul>
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=1920&q=80') center/cover no-repeat;">
+        <div class="container">
+            <h1>Contact <span>Us</span></h1>
+            <p class="hero-subtitle">Get in Touch • Start Your Journey</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-page section-padding">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <h2>Let's <span>Connect</span></h2>
+                    <p style="margin-bottom: 30px;">Ready to transform your life? Reach out to us through any of the channels below. We're here to answer your questions and help you get started on your fitness journey.</p>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <a href="tel:+919890260932">+91 98902 60932</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <a href="https://wa.me/919890260932" target="_blank">+91 98902 60932</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <a href="mailto:info@ransfitness.com">info@ransfitness.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>123 Fitness Street, Your City,<br>State - 123456, India</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Working Hours</h4>
+                            <p>Monday - Saturday: 5:00 AM - 11:00 PM<br>Sunday: Closed</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <h3>Send Us a Message</h3>
+                    
+                    <div class="form-success" id="formSuccess">
+                        <i class="fas fa-check-circle"></i> Thank you! Your message has been sent successfully. We'll contact you soon!
+                    </div>
+                    
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email (optional)">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="goal">Your Fitness Goal *</label>
+                            <select id="goal" name="goal" required>
+                                <option value="">Select your goal</option>
+                                <option value="weight-loss">Weight Loss</option>
+                                <option value="muscle-gain">Muscle Building</option>
+                                <option value="strength">Strength Training</option>
+                                <option value="general">General Fitness</option>
+                                <option value="personal-training">Personal Training</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Tell us more about your fitness goals..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <p style="font-size: 0.9rem;">Or reach us directly on</p>
+                        <a href="https://wa.me/919890260932" target="_blank" class="btn btn-whatsapp" style="margin-top: 10px;">
+                            <i class="fab fa-whatsapp"></i> WhatsApp Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Find <span>Us</span></h2>
+                <p>Visit our state-of-the-art facility and start your transformation</p>
+            </div>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.6606886724727!2d77.209021!3d28.613939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM2JzUwLjIiTiA3N8KwMTInMzIuNSJF!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Contact CTA -->
+    <section class="services section-padding" style="background: var(--secondary-black);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Quick <span>Contact Options</span></h2>
+            </div>
+            <div class="services-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                <div class="service-card" style="text-align: center;">
+                    <div class="service-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>Call Us</h3>
+                    <p>Speak directly with our team</p>
+                    <a href="tel:+919890260932" class="btn btn-primary" style="margin-top: 15px;">
+                        <i class="fas fa-phone"></i> Call Now
+                    </a>
+                </div>
+                <div class="service-card" style="text-align: center;">
+                    <div class="service-icon" style="background: #25d366;">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>WhatsApp</h3>
+                    <p>Chat with us anytime</p>
+                    <a href="https://wa.me/919890260932" target="_blank" class="btn btn-whatsapp" style="margin-top: 15px;">
+                        <i class="fab fa-whatsapp"></i> Chat Now
+                    </a>
+                </div>
+                <div class="service-card" style="text-align: center;">
+                    <div class="service-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Book a Visit</h3>
+                    <p>Schedule a free gym tour</p>
+                    <a href="#" onclick="document.getElementById('goal').value='other'; window.scrollTo({top: document.getElementById('contactForm').offsetTop - 100, behavior: 'smooth'}); return false;" class="btn btn-primary" style="margin-top: 15px;">
+                        <i class="fas fa-calendar"></i> Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Don't Wait - Start Today!</h2>
+            <p>Every day you delay is a day you could be getting closer to your goals. Take action now and transform your life!</p>
+            <div class="cta-buttons">
+                <a href="tel:+919890260932" class="btn btn-secondary btn-large">
+                    <i class="fas fa-phone"></i> Call Now
+                </a>
+                <a href="https://wa.me/919890260932" target="_blank" class="btn btn-whatsapp btn-large">
+                    <i class="fab fa-whatsapp"></i> WhatsApp Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">R</div>
+                        <div class="logo-text">RAN'S <span>FITNESS</span></div>
+                    </a>
+                    <p>Transform Your Body. Transform Your Life. Join the premier fitness destination for serious results.</p>
+                    <div class="contact-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="programs.html">Personal Training</a></li>
+                        <li><a href="programs.html">Weight Loss</a></li>
+                        <li><a href="programs.html">Muscle Building</a></li>
+                        <li><a href="programs.html">Strength Training</a></li>
+                        <li><a href="programs.html">Diet Guidance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-phone"></i> <a href="tel:+919890260932">+91 98902 60932</a></p>
+                    <p><i class="fas fa-envelope"></i> info@ransfitness.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Your Address Here</p>
+                    <p><i class="fas fa-clock"></i> Mon-Sat: 5AM - 10PM</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 RAN'S FITNESS CLUB. All Rights Reserved. Designed with <span>❤</span> for Fitness</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919890260932" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
